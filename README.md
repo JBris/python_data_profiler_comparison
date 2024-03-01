@@ -1,1 +1,3 @@
-# python_data_profiler_comp
+# Python Data Profiler Comparison
+
+ Comparison between several Python data profile libraries. 
