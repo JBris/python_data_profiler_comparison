@@ -2,7 +2,7 @@
 name = "python-data-profiler-comp"
 version = "0.1.0"
 description = ""
-authors = ["James Bristow <james.bristow@plantandfood.co.nz>"]
+authors = ["James Bristow <jbris@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
