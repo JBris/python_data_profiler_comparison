@@ -1,0 +1,1315 @@
+<div></div><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;&quot; /&gt;
+    &lt;meta name=&quot;author&quot; content=&quot;&quot; /&gt;
+
+    &lt;title&gt;Profile Visualizer | whylogs&lt;/title&gt;
+
+    &lt;link rel=&quot;icon&quot; href=&quot;images/whylabs-favicon.png&quot; type=&quot;image/png&quot; sizes=&quot;16x16&quot; /&gt;
+    &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot; /&gt;
+    &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin /&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot; /&gt;
+    &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css&quot; /&gt;
+
+    &lt;script
+      src=&quot;https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js&quot;
+      integrity=&quot;sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==&quot;
+      crossorigin=&quot;anonymous&quot;
+      referrerpolicy=&quot;no-referrer&quot;
+    &gt;&lt;/script&gt;
+
+    &lt;style type=&quot;text/css&quot;&gt;
+      :root {
+        /* CONSTANTS */
+        --SIDE-PANEL-WIDTH: 320px;
+        --PROPERTY-PANEL-WIDTH: 420px;
+
+        /* COLOR VARIABLES */
+        /** Standard colors */
+        --red: #d11010;
+        --orange: #f07028;
+        --yellow: #faaf40;
+        --olive: #b5cc18;
+        --green: #1dbb42;
+        --teal: #00b5ad;
+        --blue: #2683c9;
+        --violet: #6435c9;
+        --purple: #a333c8;
+        --pink: #ed45a4;
+        --brown: #ac724d;
+        --grey: #778183;
+        --black: #1b1c1d;
+        --white: #ffffff;
+
+        /** Branded colors */
+        --brandPrimary900: #0e7384;
+        --brandPrimary800: #228798;
+        --brandPrimary700: #369bac;
+        --brandPrimary600: #4aafc0;
+        --brandPrimary500: #5ec3d4;
+        --brandPrimary400: #72d7e8;
+        --brandPrimary300: #86ebfc;
+        --brandPrimary200: #a6f2ff;
+        --brandPrimary100: #cdf8ff;
+        --brandSecondary900: #4f595b;
+        --brandSecondary800: #636d6f;
+        --brandSecondary700: #778183;
+        --brandSecondary600: #8b9597;
+        --brandSecondary500: #9fa9ab;
+        --brandSecondary400: #b3bdbf;
+        --brandSecondary300: #c7d1d3;
+        --brandSecondary200: #dbe5e7;
+        --brandSecondary100: #ebf2f3;
+        --secondaryLight1000: #313b3d;
+        --brandRed4: #b30000;
+        --brandRed3: #d72424;
+        --brandRed2: #eb5656;
+        --brandRed1: #ff8282;
+        --night1: #021826;
+        /** Purpose colors */
+        --textColor: #4f595b;
+        --linkColor: #369bac;
+        --infoColor: #2683c9;
+        --warningColor: #faaf40;
+        --tealBackground: #eaf2f3;
+        --pageBackground: #e5e5e5;
+        --contrastTableRow: #fafafa;
+        --whiteBackground: #ffffff;
+        --primaryBackground: #e5e5e5;
+      }
+
+      /* RESET STYLE */
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: &quot;Asap&quot;, Arial, Helvetica, sans-serif;
+      }
+
+      /*
+      * Main content
+      */
+      .main {
+        position: relative;
+        background: #FFFFFF;
+        border: 1px solid #DBE5E7;
+        box-sizing: border-box;
+        border-radius: 4px;
+      }
+      .main .page-header {
+        margin-top: 0;
+      }
+
+      /* CSS DIV TABLE BASIC STYLE */
+
+      .wl-table-row .wl-table-head:first-child {
+        min-width: 360px;
+        z-index: 2;
+      }
+
+      .wl-table-wrap {
+        position: relative;
+      }
+
+      .wl-table {
+        display: table;
+        width: 100%;
+      }
+
+      .row&gt;* {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+      }
+
+      .wl-table-row {
+        display: table-row;
+      }
+
+      .wl-table-row:hover,
+      .wl-table-row:hover .wl-table-cell:first-child {
+        background-color: var(--brandSecondary100);
+      }
+      .wl-table-row--clickable:hover .wl-table-cell__title-button {
+        visibility: visible;
+      }
+
+      .wl-table-heading {
+        position: sticky;
+        top: 0;
+        z-index: 900;
+        display: table-header-group;
+        font-weight: 700;
+      }
+
+      .wl-table-cell,
+      .wl-table-head {
+        border-bottom: 1px solid var(--brandSecondary200);
+        display: table-cell;
+        padding: 12px 18px;
+      }
+
+      .wl-table-cell {
+        font-size: 14px;
+      }
+
+      .wl-table-cell--top-spacing {
+        padding-top: 35px; /* cell-top-padding + cell-title-height */
+      }
+
+      .wl-table-head-wraper {
+        background-color: var(--white);
+      }
+
+      .wl-table-head {
+        position: sticky;
+        left: 0;
+        min-width: 100px;
+        border-bottom: 2px solid var(--brandSecondary100);
+        font-size: 12px;
+        line-height: 1.67;
+        white-space: nowrap;
+      }
+
+      .wl-sub-table-head {
+        position: relative;
+      }
+
+      .wl-table-body {
+        display: table-row-group;
+      }
+
+      .wl-table-row .wl-table-cell:first-child{
+        position: sticky;
+        left: 0;
+        background-color: var(--white);
+        border-right-width: 2px;
+      }
+
+      /* Table custom style */
+
+      .wl-table-cell__title-wrap {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .wl-table-cell__title {
+        height: 25px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .wl-table-cell__bedge-wrap {
+        padding: 2px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        font-style: italic;
+        text-align: center;
+        color: var(--brandSecondary400);
+      }
+      .wl-table-cell__bedge {
+        height: 24px;
+        margin: 1px;
+        padding: 2px 8px;
+        border: 1px solid var(--brandSecondary400);
+        font-style: normal;
+        color: var(--brandSecondary900);
+        border-radius: 20px;
+        white-space: nowrap;
+      }
+
+      /* Property side panel */
+
+      .wl-compare-profile {
+        z-index: 999;
+        position: absolute;
+        right: 0;
+        background: var(--white);;
+        border-bottom: 1px solid var(--brandSecondary200);
+      }
+
+      /* Screen on smaller screens */
+      .no-responsive {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1031;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--tealBackground);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .no-responsive__content {
+        max-width: 600px;
+        width: 100%;
+        padding: 0 24px;
+      }
+
+      .no-responsive__title {
+        font-size: 96px;
+        font-weight: 300;
+        color: var(--brandSecondary900);
+        line-height: 1.167;
+      }
+
+      .no-responsive__text {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--brandSecondary900);
+        line-height: 1.5;
+      }
+
+      .space-between {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .align-items {
+        display: flex;
+        align-items: center;
+      }
+
+      .display-flex{
+        display: flex;
+      }
+
+      .table-border-none {
+        padding: 0;
+        border: none;
+      }
+
+      .flex-direction-colum {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .align-items {
+        align-items: center;
+      }
+
+      .search-input{
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+
+      .search-input input{
+        border: none;
+        background: none;
+        outline: none;
+        height: 40px;
+        width: 100%;
+        font-size: 14px;
+      }
+
+      .search-input img{
+        height: 19px;
+        pointer-events: none;
+      }
+
+      input::placeholder {
+        color: var(--secondaryLight1000);
+      }
+
+      .text-align-center {
+        text-align: center;
+      }
+
+      .text-align-end {
+        text-align: end;
+      }
+
+      .drift-detection {
+        justify-content: space-between;
+        align-items: center;
+      }
+
+     .drift-detection-info-circle {
+       width: 15px;
+       height: 15px;
+       border-radius: 50px;
+       display: inline-block;
+       margin-right: 8px;
+     }
+
+     .severe-drift-circle-color {
+         background: #D40D00;
+     }
+
+     .moderate-drift-circle-color {
+         background: #F5843C;
+     }
+
+     .mild-drift-circle-color {
+         background: #F2C142;
+     }
+
+     .minimal-drift-circle-color {
+         background: #ABCA52;
+     }
+
+     .drift-detection-info-drifts-item {
+         padding-right: 20px;
+     }
+
+     .drift-detection-info-title {
+       font-family: Arial;
+       font-weight: bold;
+       font-size: 16px;
+       line-height: 130%;
+       color: #313B3D;
+     }
+
+     .drift-detection-info-drifts-item-count {
+       font-family: Arial;
+       font-weight: bold;
+       font-size: 14px;
+       line-height: 16px;
+       color: #000000;
+       padding-right: 8px;
+     }
+
+     .drift-detection-info-drifts-item-name {
+       font-family: Arial;
+       font-style: normal;
+       font-weight: normal;
+       font-size: 12px;
+       line-height: 14px;
+       color: #000000;
+     }
+
+     .drift-detection-info-drifts-item-range {
+       font-family: Arial;
+       font-style: normal;
+       font-weight: normal;
+       font-size: 11px;
+       line-height: 13px;
+       color: #6C757D;
+     }
+
+     .drift-detection-search-input {
+       display: flex;
+       align-items: center;
+       background: rgba(255, 255, 255, 0.7);
+       border: 1px solid #DBE5E7;
+       box-sizing: border-box;
+       border-radius: 4px;
+       width: 170px;
+       padding-left: 10px;
+     }
+
+     .drift-detection-search-input img{
+       margin-right: 5px;
+     }
+
+     .drift-detection-search-input input::placeholder {
+       font-family: Arial;
+       font-weight: normal;
+       font-size: 13px;
+       line-height: 16px;
+       color: #313B3D;
+     }
+
+     .close-filter-button {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       background: rgba(255, 255, 255, 0.7);
+       border: 1px solid #369BAC;
+       box-sizing: border-box;
+       border-radius: 4px;
+       width: 40px;
+       height: 40px;
+       cursor: pointer;
+       margin-left: 10px;
+     }
+
+     .filter-options-title {
+       width: 240px;
+     }
+
+     .filter-options-title p {
+       margin: 0;
+     }
+
+     .dropdown-container {
+       position: absolute;
+       right: 18px;
+       z-index: 999;
+       background: #FFFFFF;
+       border: 1px solid #DBE5E7;
+       box-sizing: border-box;
+       box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+       border-radius: 4px;
+       padding: 10px !important;
+       border: none !important;
+     }
+
+     .form-check-input:checked {
+       background-color: #0E7384;
+       border-color: #0E7384;
+     }
+
+     .form-check-input[type=checkbox] {
+       border-radius: 2px;
+     }
+
+      .justify-content-center {
+        justify-content: center;
+      }
+
+      .wl-table-cell__graph-wrap {
+        width: 0;
+      }
+
+      .svg-container {
+        display: inline-block;
+        position: relative;
+        width: 85%;
+        padding-bottom: 17%;
+        vertical-align: top;
+        overflow: hidden;
+      }
+
+      .svg-content-responsive {
+        display: inline-block;
+        position: absolute;
+        left: 0;
+      }
+
+      .reference-table-head {
+        min-width: 250px;
+      }
+
+      .wl__dropdown_arrow-icon {
+        position: relative;
+      }
+
+      .notif-circle-container{
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        padding: 5.3px;
+        border-radius: 50%;
+        background-color: white;
+        cursor: pointer;
+      }
+
+      .notif-circle {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        padding: 3.3px;
+        border-radius: 50%;
+        background-color: #F2994A;
+      }
+
+
+      .header-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #444444;
+      }
+
+      .statistic-number-title {
+        font-family: Arial;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        color: #6C757D;
+      }
+
+      .statistic-number {
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 140%;
+        display: flex;
+        align-items: center;
+        color: #0E7384;
+      }
+
+      .statistic-measurement {
+        font-size: 15px !important;
+        margin-left: 3px;
+      }
+
+      .statistic-measurement-percent {
+        font-size: 15px !important;
+      }
+
+      .question-mark {
+        font-size: 10px;
+        font-weight: 900;
+        color: #0E7384;
+        border-radius: 50px;
+        border: 2px solid #0E7384;
+        padding: 0px 4px;
+        transition: 0.5s;
+        cursor: pointer;
+      }
+
+      .question-mark:hover {
+        color: white;
+        background: #0E7384;
+        border: 2px solid none;
+        transition: 0.5s;
+      }
+
+      .tooltip-full-number {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip-full-number .tooltiptext {
+        visibility: hidden;
+        background: black;
+        color: white;
+        border: 1px solid black;
+        text-align: start;
+        padding: 3px;
+        position: absolute;
+        z-index: 1002;
+        top: 0;
+        left: 100%;
+        margin-left: 5px;
+        opacity: 0;
+        transition: opacity 0.5s;
+        font-size: 13px;
+        font-weight: normal;
+        line-height: 100%;
+      }
+
+      .tooltip-full-number:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .display-flex {
+        display: flex;
+      }
+
+      .flex-direction-column {
+        flex-direction: column;
+      }
+
+      .justify-content-space-between {
+        justify-content: space-between;
+      }
+
+      .justify-content-center {
+        justify-content: center;
+      }
+
+      .align-items-center {
+        align-items: center;
+      }
+
+      .padding-right-30 {
+        padding-right: 30px;
+      }
+
+      .padding-5 {
+        padding: 5px;
+      }
+
+      .text-color {
+        color: var(--secondaryLight1000);
+      }
+
+      .error-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(255, 114, 71);
+        font-size: 30px;
+        font-weight: 900;
+      }
+
+      @media screen and (min-width: 500px) {
+        .desktop-content {
+          display: block;
+        }
+        .no-responsive {
+          display: none;
+        }
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+
+  &lt;body id=&quot;generated-html&quot;&gt;&lt;/body&gt;
+
+  &lt;script id=&quot;entry-template&quot; type=&quot;text/x-handlebars-template&quot;&gt;
+    
+      &lt;div class=&quot;desktop-content&quot;&gt;
+        &lt;div class=&quot;container-fluid&quot;&gt;
+          &lt;div class=&quot;feature-summary-statistics-wrap&quot;&gt;
+            &lt;div class=&quot;feature-summary-statistics&quot;&gt;
+              &lt;div class=&quot;mb-4&quot;&gt;
+                  &lt;strong class=&quot;header-title&quot;&gt;Profile Summary&lt;/strong&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;display-flex statistics&quot;&gt;
+                &lt;div class=&quot;padding-right-30&quot;&gt;
+                  &lt;div class=&quot;statistic-number-title&quot;&gt;Observations
+                    &lt;div class=&quot;tooltip-full-number&quot;&gt;
+                      &lt;span class=&quot;question-mark&quot;&gt;?&lt;/span&gt;
+                    &lt;span class=&quot;tooltiptext&quot;&gt;
+                     &lt;div class=&quot;mb-1&quot;&gt;The sum of counts for each feature. For a single dataframe, it is equal to the number of cells, i.e., rows * columns.&lt;/div&gt;
+                    &lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;div class=&quot;statistic-number&quot;&gt;{{{observations this}}}&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;padding-right-30&quot;&gt;
+                  &lt;div class=&quot;statistic-number-title&quot;&gt;Missing Cells&lt;/div&gt;
+                  &lt;div class=&quot;statistic-number&quot;&gt;
+                    {{{missingCells this}}}
+                    &lt;div&gt;{{{missingCellsPercentage this}}}&lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;wl-compare-profile&quot; id=&quot;compare-profile&quot; style=&quot;display: flex; justify-content: space-around&quot;&gt;
+                  &lt;div class=&quot;drift-detection-wrap&quot;&gt;
+                    &lt;div class=&quot;drift-detection display-flex&quot;&gt;
+                      &lt;div class=&quot;drift-detection-search-input-wrap display-flex&quot;&gt;
+                        &lt;div class=&quot;drift-detection-search-input search-input &quot;&gt;
+                          &lt;input type=&quot;text&quot; id=&quot;wl__feature-search&quot; placeholder=&quot;Quick search...&quot;/&gt;
+                          &lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGdSURBVHgBpZK7TkJBEIZnZoVocdTYyQNALxpNKPQBMEaNJsbCRMKhl8ISWwt6AaksCF5iTHgAGhJD4AHkAaAzGiwUsjvOQnO4SYh/cXbPzO43OxcEj9Zy92EiFSXNIfvPyE1kKFfdoxJMENpP6DrvLC0vJoEwCgwto7DWcxoIIHBYbA3NmKwnDltjAeuZhyul1DaTTlfPB6Nt5Z53DOgky4P875+nlctY2+unjZviLklkJhi5bPUa3y/7qJuQUM7PinMy7CdQc1Gh16vnBxPzrMROmlKQEgKNASAHLQCmSIGpS75O+O5pdQAgVXaIqTkNwDDXHmcnW3VmHZoGMLoTsOt88+NrAMCIZdu+iLTyTwKRa1Md6YKfOgXbzO7K8sWku5u5RxcRV5EpPezrzcHGbXEXWaUkgkweZ/UC9YrK3zqggFw5FBZfm8EUavHj7AjAKpIvBDrGn+pNnlcyhYgqbcC41idr1gvB4SdZkDbzQa21gwv0Vj07aPTtL07XdDOyDXohCDNoHIRmAVRie20f+RKybRDQDvxHkXy/7b/DrayncLbMwQAAAABJRU5ErkJggg==&quot;/&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;wl__dropdown_arrow-icon&quot; &gt;
+                          &lt;div onclick=&quot;openFilter()&quot; class=&quot;close-filter-button&quot;&gt;
+                            &lt;div class=&quot;display-flex close-filter-icon d-none&quot;&gt;
+                              &lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADFSURBVHgBfY+xDcIwEEXvnLQBZQkYAEhDwwKpEEK0CCZgAEjJCEmgjYSAygxAHTZgFRSOsyUjY5mcZFnn/+78PwBXf3+MoKWUPuYjVBPFnTwpr9t/oNJfcTfXsAhRAlDqDhhQIPYgpAqNMDqcUqSAYZT1epr9gAHt6uXshvYme4DYHQJNDKh0dD0m5WXB10Y3Fqjtuh7fROn3oREDWxfeMLyRsMnc0OgDzdduaA0Pi3Plgr7Q2kaAePeBqh6rueSNBVt6fgCwBV1JLF3rlAAAAABJRU5ErkJggg==&quot;/&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&quot;display-flex filter-icon&quot;&gt;
+                              &lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAYAAADtc08vAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACSSURBVHgBrZLBCYAwDEWTUjw7igcdwI1cxkNXUJzBEVzFAbSVKoKmaVrEB6GHJv/w+AACtRk7P9IONv1QOYUl96k0zv61m2tjARoLtSDI3EFsgIJ4uoXrMLazO72CRG2mzg/8BSdVlEjhpGZJjAWdAZJECpWalEhJSs1pHuUlMad5FFai1Lwg4Ckx1TxKIPFL8w55mEWd8VjPGAAAAABJRU5ErkJggg==&quot;/&gt;
+                            &lt;/div&gt;
+                          &lt;/div&gt;
+                          &lt;span class=&quot;notif-circle-container&quot;&gt;
+                            &lt;span class=&quot;notif-circle&quot;&gt;&lt;/span&gt;
+                          &lt;/span&gt;
+                        &lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;dropdown-container flex-direction-colum mb-2 d-none&quot; id=&quot;dropdown-container&quot;&gt;
+                    &lt;div class=&quot;filter-options&quot;&gt;
+                      &lt;div class=&quot;filter-options-title space-between dropdown&quot;&gt;
+                        &lt;p&gt;Filter by type&lt;/p&gt;
+                      &lt;/div&gt;
+                      &lt;div class=&quot;form-check mb-1 mt-2&quot;&gt;
+                        &lt;input
+                          class=&quot;form-check-input wl__feature-filter-input&quot;
+                          type=&quot;checkbox&quot;
+                          name=&quot;checkbox&quot;
+                          value=&quot;Discrete&quot;
+                          id=&quot;inferredDiscrete&quot;
+                          onclick=&quot;changeDiscreteValue()&quot;
+                          checked
+                        /&gt;
+                        &lt;label class=&quot;form-check-label&quot; for=&quot;inferredDiscrete&quot;&gt;
+                          Inferred discrete (&lt;span class=&quot;wl__feature-count--discrete&quot;&gt;{{getDiscreteTypeCount}}&lt;/span&gt;)
+                        &lt;/label&gt;
+                      &lt;/div&gt;
+                      &lt;div class=&quot;form-check mb-1&quot;&gt;
+                        &lt;input
+                          class=&quot;form-check-input wl__feature-filter-input&quot;
+                          type=&quot;checkbox&quot;
+                          name=&quot;checkbox&quot;
+                          value=&quot;Non-discrete&quot;
+                          id=&quot;inferredNonDiscrete&quot;
+                          onclick=&quot;changeNonDiscreteValue()&quot;
+                          checked
+                        /&gt;
+                        &lt;label class=&quot;form-check-label&quot; for=&quot;inferredNonDiscrete&quot;&gt;
+                          Inferred non-discrete (&lt;span
+                            class=&quot;wl__feature-count--non-discrete&quot;
+                          &gt;{{getNonDiscreteTypeCount}}&lt;/span&gt;)
+                        &lt;/label&gt;
+                      &lt;/div&gt;
+                      &lt;div class=&quot;form-check mb-1&quot;&gt;
+                        &lt;input
+                          class=&quot;form-check-input wl__feature-filter-input&quot;
+                          type=&quot;checkbox&quot;
+                          name=&quot;checkbox&quot;
+                          value=&quot;Unknown&quot;
+                          id=&quot;inferredUnknown&quot;
+                          onclick=&quot;changeUnknwonValue()&quot;
+                          checked
+                        /&gt;
+                        &lt;label class=&quot;form-check-label&quot; for=&quot;inferredUnknown&quot;&gt;
+                          Unknown (&lt;span class=&quot;wl__feature-count--unknown&quot;&gt;{{getUnknownTypeCount}}&lt;/span&gt;)
+                        &lt;/label&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;row&quot;&gt;
+            &lt;div class=&quot;main&quot;&gt;
+              &lt;div class=&quot;wl-table-wrap&quot; id=&quot;table-content&quot;&gt;
+                &lt;div class=&quot;wl-table&quot;&gt;
+                  &lt;div class=&quot;wl-table-heading&quot;&gt;
+                    &lt;div class=&quot;wl-table-row wl-table-row--bottom-shadow&quot;&gt;
+                      &lt;div class=&quot;wl-table-head wl-table-head-wraper&quot;&gt;
+                        &lt;div class=&quot;wl-table-head table-border-none graph-table-head&quot;&gt;Target&lt;/div&gt;
+                      &lt;/div&gt;
+                      &lt;div class=&quot;wl-table-head wl-table-head-wraper text-align-end&quot;&gt;Total count&lt;/div&gt;
+                      &lt;div class=&quot;wl-table-head wl-table-head-wraper text-align-end&quot;&gt;Missing&lt;/div&gt;
+                      &lt;div class=&quot;wl-table-head wl-table-head-wraper text-align-end&quot;&gt;Mean&lt;/div&gt;
+                      &lt;div class=&quot;wl-table-head wl-table-head-wraper text-align-end&quot;&gt;Min&lt;/div&gt;
+                      &lt;div class=&quot;wl-table-head wl-table-head-wraper text-align-end&quot;&gt;Max&lt;/div&gt;
+
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;ul class=&quot;wl-table-body wl__table-body&quot; id=&quot;table-body&quot;&gt;
+{{#each this.columns}}                    &lt;li
+                    {{#if this.numberSummary}} class=&quot;wl-table-row wl-table-row--clickable&quot; {{else}} class=&quot;wl-table-row&quot; {{/if}}
+                    data-feature-name={{@key}}
+                    data-inferred-type={{inferredType this}}
+                    data-scroll-to-feature-name={{@key}}
+                  &gt;
+                      &lt;div class=&quot;wl-table-cell wl-table-cell__graph-wrap&quot;&gt;
+                        &lt;div class=&quot;wl-table-cell__title-wrap&quot;&gt;
+                          &lt;h4 class=&quot;wl-table-cell__title&quot;&gt;{{@key}}&lt;/h4&gt;
+                          &lt;div&gt;&lt;/div&gt;
+                        &lt;/div&gt;
+                          &lt;div class=&quot;display-flex&quot;&gt;
+                              {{{getGraphHtml this}}}
+                          &lt;/div&gt;
+                      &lt;/div&gt;
+                      &lt;div
+                        class=&quot;wl-table-cell wl-table-cell--top-spacing align-middle&quot;
+                      &gt;&lt;div class=&quot;text-align-end&quot;&gt;{{totalCount this}}&lt;/div&gt;&lt;/div&gt;
+                      &lt;div
+                        class=&quot;wl-table-cell wl-table-cell--top-spacing align-middle&quot;
+                      &gt;&lt;div class=&quot;text-align-end&quot;&gt;{{missing this}}&lt;/div&gt;&lt;/div&gt;
+                      &lt;div
+                        class=&quot;wl-table-cell wl-table-cell--top-spacing align-middle&quot;
+                      &gt;&lt;div class=&quot;text-align-end&quot;&gt;{{mean this}}&lt;/div&gt;&lt;/div&gt;
+                      &lt;div
+                        class=&quot;wl-table-cell wl-table-cell--top-spacing align-middle&quot;
+                      &gt;&lt;div class=&quot;text-align-end&quot;&gt;{{minimumValue this}}&lt;/div&gt;&lt;/div&gt;
+                      &lt;div
+                        class=&quot;wl-table-cell wl-table-cell--top-spacing align-middle&quot;
+                      &gt;&lt;div class=&quot;text-align-end&quot;&gt;{{maximumValue this}}&lt;/div&gt;&lt;/div&gt;
+
+                    &lt;/li&gt;
+{{/each}}                  &lt;/ul&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;no-responsive&quot;&gt;
+        &lt;div class=&quot;no-responsive__content&quot;&gt;
+          &lt;h1 class=&quot;no-responsive__title&quot;&gt;Hold on! :)&lt;/h1&gt;
+          &lt;p class=&quot;no-responsive__text&quot;&gt;
+            It looks like your current screen size or device is not yet supported by the WhyLabs Sandbox. The Sandbox is
+            best experienced on a desktop computer. Please try maximizing this window or switching to another device. We
+            are working on adding support for a larger variety of devices.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    
+  &lt;/script&gt;
+
+  &lt;script src=&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot; integrity=&quot;sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/6.7.0/d3.min.js&quot; integrity=&quot;sha512-cd6CHE+XWDQ33ElJqsi0MdNte3S+bQY819f7p3NUHgwQQLXSKjE4cPZTeGNI+vaxZynk1wVU3hoHmow3m089wA==&quot; crossorigin=&quot;anonymous&quot; referrerpolicy=&quot;no-referrer&quot;&gt;&lt;/script&gt;
+
+  &lt;script&gt;
+    const getTargetProfile = () =&gt; { return {&quot;columns&quot;: {&quot;sepal length (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 4.3, &quot;end&quot;: 7.90000079, &quot;width&quot;: 0, &quot;counts&quot;: [4, 1, 4, 2, 11, 10, 9, 4, 1, 13, 6, 8, 7, 3, 12, 4, 9, 7, 5, 10, 3, 4, 1, 1, 4, 1, 0, 1, 4, 1], &quot;max&quot;: 7.9, &quot;min&quot;: 4.3, &quot;bins&quot;: [4.3, 4.420000026333333, 4.540000052666667, 4.660000079, 4.780000105333333, 4.900000131666666, 5.020000158, 5.140000184333333, 5.260000210666666, 5.380000237, 5.500000263333334, 5.620000289666667, 5.740000316, 5.860000342333334, 5.9800003686666665, 6.100000395, 6.220000421333333, 6.340000447666666, 6.460000474, 6.580000500333334, 6.700000526666667, 6.820000553, 6.940000579333333, 7.060000605666667, 7.1800006320000005, 7.3000006583333334, 7.420000684666666, 7.540000711, 7.660000737333333, 7.780000763666667, 7.90000079], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 23.333335303598176, &quot;min&quot;: 4.3, &quot;max&quot;: 7.9, &quot;range&quot;: 3.6000000000000005, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 4.6, &quot;iqr&quot;: 1.3000000000000007, &quot;q1&quot;: 5.1, &quot;median&quot;: 5.8, &quot;q3&quot;: 6.4, &quot;ninety_fifth_percentile&quot;: 7.3}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.828066127977863, &quot;coefficient_of_variation&quot;: 0.14171125977944032, &quot;sum&quot;: 876.5, &quot;variance&quot;: 0.6856935123042507, &quot;mean&quot;: 5.843333333333334}}}, &quot;sepal width (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 2.0, &quot;end&quot;: 4.40000044, &quot;width&quot;: 0, &quot;counts&quot;: [1, 0, 3, 4, 3, 0, 8, 5, 9, 14, 0, 10, 26, 11, 13, 0, 6, 12, 6, 4, 0, 3, 6, 2, 1, 0, 1, 1, 0, 1], &quot;max&quot;: 4.4, &quot;min&quot;: 2.0, &quot;bins&quot;: [2.0, 2.0800000146666666, 2.1600000293333332, 2.240000044, 2.3200000586666665, 2.4000000733333335, 2.480000088, 2.5600001026666668, 2.6400001173333334, 2.720000132, 2.8000001466666666, 2.8800001613333333, 2.9600001760000003, 3.0400001906666665, 3.1200002053333336, 3.20000022, 3.280000234666667, 3.3600002493333334, 3.440000264, 3.520000278666667, 3.6000002933333333, 3.6800003080000003, 3.760000322666667, 3.8400003373333336, 3.920000352, 4.000000366666667, 4.080000381333333, 4.160000396, 4.240000410666667, 4.320000425333333, 4.40000044], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 15.33333417110978, &quot;min&quot;: 2.0, &quot;max&quot;: 4.4, &quot;range&quot;: 2.4000000000000004, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 2.3, &quot;iqr&quot;: 0.5, &quot;q1&quot;: 2.8, &quot;median&quot;: 3.0, &quot;q3&quot;: 3.3, &quot;ninety_fifth_percentile&quot;: 3.8}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.4358662849366982, &quot;coefficient_of_variation&quot;: 0.14256420135304126, &quot;sum&quot;: 458.6000000000001, &quot;variance&quot;: 0.189979418344519, &quot;mean&quot;: 3.0573333333333337}}}, &quot;petal length (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 1.0, &quot;end&quot;: 6.900000690000001, &quot;width&quot;: 0, &quot;counts&quot;: [2, 9, 26, 11, 2, 0, 0, 0, 0, 0, 1, 2, 2, 2, 4, 8, 6, 12, 8, 9, 12, 4, 5, 9, 5, 5, 1, 1, 3, 1], &quot;max&quot;: 6.9, &quot;min&quot;: 1.0, &quot;bins&quot;: [1.0, 1.1966666896666667, 1.3933333793333333, 1.5900000690000002, 1.7866667586666667, 1.9833334483333336, 2.1800001380000005, 2.376666827666667, 2.5733335173333334, 2.7700002070000003, 2.966666896666667, 3.1633335863333336, 3.3600002760000005, 3.556666965666667, 3.753333655333334, 3.9500003450000003, 4.146667034666667, 4.343333724333334, 4.5400004140000005, 4.736667103666667, 4.933333793333334, 5.130000483000001, 5.326667172666667, 5.523333862333334, 5.720000552000001, 5.9166672416666675, 6.113333931333334, 6.310000621000001, 6.506667310666668, 6.703334000333334, 6.900000690000001], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 28.666669656833378, &quot;min&quot;: 1.0, &quot;max&quot;: 6.9, &quot;range&quot;: 5.9, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 1.3, &quot;iqr&quot;: 3.4999999999999996, &quot;q1&quot;: 1.6, &quot;median&quot;: 4.4, &quot;q3&quot;: 5.1, &quot;ninety_fifth_percentile&quot;: 6.1}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 1.7652982332594662, &quot;coefficient_of_variation&quot;: 0.4697440748428595, &quot;sum&quot;: 563.7, &quot;variance&quot;: 3.116277852348993, &quot;mean&quot;: 3.7580000000000005}}}, &quot;petal width (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 0.1, &quot;end&quot;: 2.50000025, &quot;width&quot;: 0, &quot;counts&quot;: [5, 29, 7, 7, 1, 0, 1, 0, 0, 0, 0, 7, 3, 5, 13, 0, 8, 12, 4, 2, 0, 12, 5, 6, 6, 0, 3, 8, 3, 3], &quot;max&quot;: 2.5, &quot;min&quot;: 0.1, &quot;bins&quot;: [0.1, 0.18000000833333335, 0.26000001666666667, 0.34000002500000004, 0.42000003333333336, 0.5000000416666667, 0.58000005, 0.6600000583333333, 0.7400000666666666, 0.8200000749999999, 0.9000000833333333, 0.9800000916666666, 1.0600001000000001, 1.1400001083333333, 1.2200001166666667, 1.300000125, 1.3800001333333334, 1.4600001416666668, 1.54000015, 1.6200001583333334, 1.7000001666666666, 1.780000175, 1.8600001833333333, 1.9400001916666667, 2.0200002, 2.1000002083333333, 2.1800002166666665, 2.260000225, 2.3400002333333334, 2.4200002416666666, 2.50000025], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 14.666667431592986, &quot;min&quot;: 0.1, &quot;max&quot;: 2.5, &quot;range&quot;: 2.4, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 0.2, &quot;iqr&quot;: 1.5, &quot;q1&quot;: 0.3, &quot;median&quot;: 1.3, &quot;q3&quot;: 1.8, &quot;ninety_fifth_percentile&quot;: 2.3}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.7622376689603465, &quot;coefficient_of_variation&quot;: 0.6355511414344188, &quot;sum&quot;: 179.90000000000003, &quot;variance&quot;: 0.5810062639821029, &quot;mean&quot;: 1.1993333333333336}}}, &quot;target&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 0.0, &quot;end&quot;: 2.0000002, &quot;width&quot;: 0, &quot;counts&quot;: [50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50], &quot;max&quot;: 2.0, &quot;min&quot;: 0.0, &quot;bins&quot;: [0.0, 0.06666667333333334, 0.13333334666666669, 0.20000002000000003, 0.26666669333333337, 0.3333333666666667, 0.40000004000000006, 0.4666667133333334, 0.5333333866666667, 0.6000000600000001, 0.6666667333333334, 0.7333334066666668, 0.8000000800000001, 0.8666667533333334, 0.9333334266666669, 1.0000001, 1.0666667733333335, 1.133333446666667, 1.2000001200000001, 1.2666667933333335, 1.3333334666666667, 1.4000001400000002, 1.4666668133333336, 1.5333334866666668, 1.6000001600000002, 1.6666668333333337, 1.7333335066666669, 1.8000001800000003, 1.8666668533333337, 1.933333526666667, 2.0000002], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 2.0000000099341073, &quot;min&quot;: 0.0, &quot;max&quot;: 2.0, &quot;range&quot;: 2.0, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 0.0, &quot;iqr&quot;: 2.0, &quot;q1&quot;: 0.0, &quot;median&quot;: 1.0, &quot;q3&quot;: 2.0, &quot;ninety_fifth_percentile&quot;: 2.0}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.8192319205190405, &quot;coefficient_of_variation&quot;: 0.8192319205190405, &quot;sum&quot;: 150.0, &quot;variance&quot;: 0.6711409395973155, &quot;mean&quot;: 1.0}}}, &quot;prediction&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 0.0, &quot;end&quot;: 2.0000002, &quot;width&quot;: 0, &quot;counts&quot;: [50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50], &quot;max&quot;: 2.0, &quot;min&quot;: 0.0, &quot;bins&quot;: [0.0, 0.06666667333333334, 0.13333334666666669, 0.20000002000000003, 0.26666669333333337, 0.3333333666666667, 0.40000004000000006, 0.4666667133333334, 0.5333333866666667, 0.6000000600000001, 0.6666667333333334, 0.7333334066666668, 0.8000000800000001, 0.8666667533333334, 0.9333334266666669, 1.0000001, 1.0666667733333335, 1.133333446666667, 1.2000001200000001, 1.2666667933333335, 1.3333334666666667, 1.4000001400000002, 1.4666668133333336, 1.5333334866666668, 1.6000001600000002, 1.6666668333333337, 1.7333335066666669, 1.8000001800000003, 1.8666668533333337, 1.933333526666667, 2.0000002], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 2.0000000099341073, &quot;min&quot;: 0.0, &quot;max&quot;: 2.0, &quot;range&quot;: 2.0, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 0.0, &quot;iqr&quot;: 2.0, &quot;q1&quot;: 0.0, &quot;median&quot;: 1.0, &quot;q3&quot;: 2.0, &quot;ninety_fifth_percentile&quot;: 2.0}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.8192319205190405, &quot;coefficient_of_variation&quot;: 0.8192319205190405, &quot;sum&quot;: 150.0, &quot;variance&quot;: 0.6711409395973155, &quot;mean&quot;: 1.0}}}}, &quot;properties&quot;: {&quot;observations&quot;: 900, &quot;missing_cells&quot;: 0, &quot;missing_percentage&quot;: 0.0}} }
+    const targetProfile = getTargetProfile()
+
+    function fixNumberTo(number, decimals = 3) {
+      const fractionalDigits = String(number % 1).split(&#x27;&#x27;).slice(2, 2 + decimals).join(&#x27;&#x27;)
+      return `${Math.trunc(number)}.${fractionalDigits}`
+    }
+
+    function registerHandlebarHelperFunctions() {
+      //helper fun
+
+      class GenerateChartParams {
+        constructor(height, width, data, bottomMargin=20, topMargin=5) {
+          this.MARGIN = {
+            TOP: topMargin,
+            RIGHT: 5,
+            BOTTOM: bottomMargin,
+            LEFT: 55,
+          };
+          this.SVG_WIDTH = width;
+          this.SVG_HEIGHT = height;
+          this.CHART_WIDTH = this.SVG_WIDTH - this.MARGIN.LEFT - this.MARGIN.RIGHT;
+          this.CHART_HEIGHT = this.SVG_HEIGHT - this.MARGIN.TOP - this.MARGIN.BOTTOM;
+          this.svgEl = d3.create(&quot;svg&quot;)
+             .attr(&quot;preserveAspectRatio&quot;, &quot;xMinYMin meet&quot;)
+             .attr(&quot;viewBox&quot;, &quot;30 0 240 400&quot;)
+             .classed(&quot;svg-content-responsive&quot;, true)
+          this.maxYValue = d3.max(data, (d) =&gt; Math.abs(d.axisY));
+          this.xScale = d3
+            .scaleBand()
+            .domain(data.map((d) =&gt; d.axisX))
+            .range([this.MARGIN.LEFT, this.MARGIN.LEFT + this.CHART_WIDTH]);
+          this.yScale = d3
+            .scaleLinear()
+            .domain([0, this.maxYValue * 1.02])
+            .range([this.CHART_HEIGHT, 0]);
+        }
+      }
+
+      function generateChart(data, height = 70, width = 250, index = 0, referenceProfileExist = false) {
+        const sizes = new GenerateChartParams(height, width, data, 5)
+        const {
+          MARGIN,
+          SVG_WIDTH,
+          SVG_HEIGHT,
+          CHART_WIDTH,
+          CHART_HEIGHT,
+          svgEl,
+          maxYValue,
+          xScale,
+          yScale
+        } = sizes
+        const rectColors = [&quot;#44C0E7&quot;, &quot;#F5843C&quot;]
+
+        // Add the y Axis
+        if (!referenceProfileExist) {
+          svgEl
+            .append(&quot;g&quot;)
+            .attr(&quot;transform&quot;, &quot;translate(&quot; + MARGIN.LEFT + &quot;, &quot; + MARGIN.TOP + &quot;)&quot;)
+            .call(d3.axisLeft(yScale).tickValues([0, maxYValue/2, maxYValue]))
+            .selectAll(&quot;text&quot;)
+            .style(&quot;font-size&quot;, &quot;8&quot;)
+        }
+
+        const gChart = svgEl.append(&quot;g&quot;);
+        gChart
+          .attr(&quot;transform&quot;, &quot;translate(&quot; + 20 + &quot;, &quot; + 0 + &quot;)&quot;)
+          .selectAll(&quot;.bar&quot;)
+          .data(data)
+          .enter()
+          .append(&quot;rect&quot;)
+          .classed(&quot;bar&quot;, true)
+          .attr(&quot;width&quot;, xScale.bandwidth() - 1)
+          .attr(&quot;height&quot;, (d) =&gt; CHART_HEIGHT - yScale(d.axisY))
+          .attr(&quot;x&quot;, (d) =&gt; xScale(d.axisX))
+          .attr(&quot;y&quot;, (d) =&gt; yScale(d.axisY) + MARGIN.TOP)
+          .attr(&quot;fill&quot;, rectColors[index]);
+
+        return svgEl._groups[0][0].outerHTML;
+      }
+
+      function chartData(column) {
+        const data = [];
+        if (column.histogram) {
+          column.histogram.counts.slice(0, 30).forEach((count, index) =&gt; {
+            data.push({
+              axisY: count,
+              axisX: index,
+            });
+          });
+        } else if (column.frequentItems) {
+          Object.entries(column.frequentItems).forEach(([key, {value, estimate}], index) =&gt; {
+              data.push({
+                axisY: estimate,
+                axisX: value,
+              });
+            });
+        }
+
+        return data
+      }
+
+      function graph(column, key, referenceColumn) {
+        let data = [];
+        const columnKey = key.data.key
+        let chartValue = false
+        let chartColor = undefined
+        if(!!referenceColumn){
+          column = referenceColumn.columns[columnKey]
+          chartValue = true
+          chartColor = 1
+        } else if (referenceColumn === undefined) {
+          column = &quot;&quot;
+        }
+
+        if (column.histogram || column.frequentItems) {
+          data = chartData(column)
+        } else if (referenceColumn === null ) {
+            $(&quot;.svg-container&quot;).css(&quot;padding-bottom&quot;, &quot;0&quot;)
+            return &#x27;&lt;span class=&quot;wl-table-cell__bedge-wrap&quot;&gt;No data to show the chart&lt;/span&gt;&#x27;;
+        } else if (referenceColumn === undefined) {
+            $(document).ready(function() {
+              $(&quot;.reference-table-head&quot;).addClass(&quot;d-none&quot;)
+            });
+            return &#x27;&#x27;
+        } else if (referenceColumn.frequentItems === undefined){
+            return &#x27;&#x27;;
+        }
+        return `
+          &lt;div class=&quot;svg-container&quot;&gt;
+            ${generateChart(data, ...[,,], chartColor, chartValue)}
+          &lt;/div&gt;
+        `;
+      }
+
+      function formatLabelDate(timestamp) {
+        const date = new Date(timestamp);
+        const format = d3.timeFormat(&quot;%Y-%m-%d %I:%M:%S %p %Z&quot;);
+        return format(date);
+      }
+
+    abbreviate_number = function(value, fixed = 0) {
+      value = +value
+      if (value === null) { return null; } // terminate early
+      if (value === 0) { return &#x27;0&#x27;; } // terminate early
+      fixed = (!fixed || fixed &lt; 0) ? 0 : fixed; // number of decimal places to show
+      var b = (value).toPrecision(2).split(&quot;e&quot;), // get power
+          k = b.length === 1 ? 0 : Math.floor(Math.min(b[1].slice(1), 14) / 3), // floor at decimals, ceiling at trillions
+          c = k &lt; 1 ? value.toFixed(0 + fixed) : (value / Math.pow(10, k * 3) ).toFixed(1 + fixed), // divide by power
+          d = c &lt; 0 ? c : Math.abs(c), // enforce -0 is 0
+          newValue = d,
+          suffixe = [&#x27;&#x27;, &#x27;K&#x27;, &#x27;M&#x27;, &#x27;B&#x27;, &#x27;T&#x27;][k]; // append power
+      return {value, newValue, suffixe};
+    }
+
+     function formatBytes(bytes, decimals = 2) {
+       let newValue,
+       suffixe = &quot;&quot;
+       if (bytes === 0) return &#x27;0 Bytes&#x27;;
+
+       const k = 1024;
+       const dm = decimals &lt; 0 ? 0 : decimals;
+       const sizes = [&#x27;Bytes&#x27;, &#x27;KiB&#x27;, &#x27;MB&#x27;, &#x27;GB&#x27;, &#x27;TB&#x27;, &#x27;PB&#x27;, &#x27;EB&#x27;, &#x27;ZB&#x27;, &#x27;YB&#x27;];
+
+       const i = Math.floor(Math.log(bytes) / Math.log(k));
+       newValue = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+       suffixe = sizes[i]
+       return {bytes, newValue, suffixe};
+     }
+
+     const valueSuffixe = (newNumber) =&gt; `
+       &lt;div class=&quot;statistic-measurement&quot;&gt;
+        ${newNumber}
+       &lt;/div&gt;`
+     const valueNumber = (newNumber) =&gt; `
+       &lt;div class=&quot;statistic-number&quot;&gt;
+        ${newNumber}
+       &lt;/div&gt;`
+
+     const numberWithSuffixe = (number, newNumber, suffixe) =&gt;
+       `&lt;div class=&quot;tooltip-full-number&quot;&gt;
+          &lt;div class=&quot;statistic-number&quot;&gt;
+             ${newNumber}
+            &lt;div class=&quot;statistic-measurement&quot;&gt;${suffixe}&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;span class=&quot;tooltiptext&quot;&gt;${number}&lt;/span&gt;
+        &lt;/div&gt;`
+
+     Handlebars.registerHelper(&quot;observations&quot;, function (properties) {
+       const {value, newValue, suffixe} = abbreviate_number(targetProfile.properties.observations)
+       return numberWithSuffixe(value, valueNumber(newValue), valueNumber(suffixe));
+     });
+
+     Handlebars.registerHelper(&quot;missingCells&quot;, function (properties) {
+       const {value, newValue, suffixe} = abbreviate_number(targetProfile.properties.missing_cells)
+       if (typeof value !== &#x27;undefined&#x27; &amp;&amp; typeof newValue !== &#x27;undefined&#x27;  &amp;&amp; typeof suffixe !== &#x27;undefined&#x27; ) {
+        return numberWithSuffixe(value, valueSuffixe(`${newValue}`), suffixe);
+       }
+       return numberWithSuffixe(0, valueNumber(0), valueNumber(&#x27;&#x27;));
+     });
+
+     Handlebars.registerHelper(&quot;missingCellsPercentage&quot;, function (properties) {
+       const {value, newValue, suffixe} = abbreviate_number(targetProfile.properties.missing_percentage)
+       if (typeof value !== &#x27;undefined&#x27; &amp;&amp; typeof newValue !== &#x27;undefined&#x27;  &amp;&amp; typeof suffixe !== &#x27;undefined&#x27; ) {
+        return numberWithSuffixe(value, valueSuffixe(`(${newValue}%)`), suffixe);
+       }
+       return numberWithSuffixe(0, valueSuffixe(`(${0}%)`), &#x27;&#x27;);
+     });
+
+     Handlebars.registerHelper(&quot;getProfileTimeStamp&quot;, function (properties) {
+       return formatLabelDate(+properties.properties.dataTimestamp)
+     });
+
+     Handlebars.registerHelper(&quot;getProfileName&quot;, function (properties) {
+       return properties.properties.tags.name
+     });
+
+       const cheqValueTypeNumber = (profile, profileValue) =&gt; {
+         let validValue;
+         if (profile &amp;&amp; profileValue !== undefined &amp;&amp; typeof profileValue === &quot;number&quot;) {
+           return true
+         } else if (profileValue !== undefined &amp;&amp; typeof profileValue !== &quot;number&quot;) {
+           return false
+         }
+       }
+
+
+      Handlebars.registerHelper(&quot;inferredType&quot;, function (column) {
+        let infferedType = &quot;&quot;;
+
+        if (column.isDiscrete) {
+          infferedType = &quot;Discrete&quot;;
+        } else {
+          infferedType = &quot;Non-discrete&quot;;
+        }
+        return infferedType;
+      });
+
+      Handlebars.registerHelper(&quot;frequentItems&quot;, function (column) {
+        frequentItemsElemString = &quot;&quot;;
+        if (column.isDiscrete) {
+          const slicedFrequentItems = column.frequentItems.items.slice(0, 5);
+          for (let fi = 0; fi &lt; slicedFrequentItems.length; fi++) {
+            frequentItemsElemString +=
+              &#x27;&lt;span class=&quot;wl-table-cell__bedge&quot;&gt;&#x27; + slicedFrequentItems[fi].jsonValue + &quot;&lt;/span&gt;&quot;;
+          }
+        } else {
+          frequentItemsElemString += &quot;No data to show&quot;;
+        }
+        return frequentItemsElemString;
+      });
+
+      Handlebars.registerHelper(&quot;totalCount&quot;, function (column) {
+        if (column.featureStats) {
+          return column.featureStats.total_count;
+        }
+
+        return &quot;-&quot;;
+      });
+
+      Handlebars.registerHelper(&quot;missing&quot;, function (column) {
+        if (column.featureStats) {
+          return column.featureStats.missing;
+        }
+
+        return &quot;-&quot;;
+      });
+
+      Handlebars.registerHelper(&quot;minimumValue&quot;, function (column) {
+        if (column.featureStats) {
+          if (isNaN(column.featureStats.min)){return &quot;-&quot;}
+          return fixNumberTo(column.featureStats.min);
+        }
+
+        return &quot;-&quot;;
+      });
+
+      Handlebars.registerHelper(&quot;maximumValue&quot;, function (column) {
+        if (column.featureStats) {
+          if (isNaN(column.featureStats.max)){return &quot;-&quot;}
+          return fixNumberTo(column.featureStats.max);
+        }
+
+        return &quot;-&quot;;
+      });
+
+
+      Handlebars.registerHelper(&quot;mean&quot;, function (column) {
+        if (column.featureStats?.descriptive_statistics) {
+          if (isNaN(column.featureStats.descriptive_statistics.mean)){return &quot;-&quot;}
+          if (column.featureStats.descriptive_statistics.mean==null){return &quot;-&quot;}
+          return fixNumberTo(column.featureStats.descriptive_statistics.mean);
+        }
+        return &quot;-&quot;;
+      });
+
+      Handlebars.registerHelper(&quot;getGraphHtml&quot;,(column,key) =&gt; graph(column, key, null));
+
+      Handlebars.registerHelper(&quot;getDiscreteTypeCount&quot;, function () {
+        let count = 0;
+
+        Object.entries(this.columns).forEach((feature) =&gt; {
+          if (feature[1].isDiscrete === true) {
+            count++;
+          }
+        });
+        return count.toString();
+      });
+
+      Handlebars.registerHelper(&quot;getNonDiscreteTypeCount&quot;, function () {
+        let count = 0;
+
+        Object.entries(this.columns).forEach((feature) =&gt; {
+          if (feature[1].isDiscrete === false) {
+            count++;
+          }
+        });
+        return count;
+      });
+
+      Handlebars.registerHelper(&quot;getUnknownTypeCount&quot;, function () {
+        let count = 0;
+        return count;
+        Object.entries(this.columns).forEach((feature) =&gt; {
+          if (!feature[1].isDiscrete) {
+            count++;
+          }
+        });
+        return count;
+      });
+    }
+
+    function initHandlebarsTemplate() {
+      // Replace this context with JSON from .py file
+      const context = {&quot;columns&quot;: {&quot;sepal length (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 4.3, &quot;end&quot;: 7.90000079, &quot;width&quot;: 0, &quot;counts&quot;: [4, 1, 4, 2, 11, 10, 9, 4, 1, 13, 6, 8, 7, 3, 12, 4, 9, 7, 5, 10, 3, 4, 1, 1, 4, 1, 0, 1, 4, 1], &quot;max&quot;: 7.9, &quot;min&quot;: 4.3, &quot;bins&quot;: [4.3, 4.420000026333333, 4.540000052666667, 4.660000079, 4.780000105333333, 4.900000131666666, 5.020000158, 5.140000184333333, 5.260000210666666, 5.380000237, 5.500000263333334, 5.620000289666667, 5.740000316, 5.860000342333334, 5.9800003686666665, 6.100000395, 6.220000421333333, 6.340000447666666, 6.460000474, 6.580000500333334, 6.700000526666667, 6.820000553, 6.940000579333333, 7.060000605666667, 7.1800006320000005, 7.3000006583333334, 7.420000684666666, 7.540000711, 7.660000737333333, 7.780000763666667, 7.90000079], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 23.333335303598176, &quot;min&quot;: 4.3, &quot;max&quot;: 7.9, &quot;range&quot;: 3.6000000000000005, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 4.6, &quot;iqr&quot;: 1.3000000000000007, &quot;q1&quot;: 5.1, &quot;median&quot;: 5.8, &quot;q3&quot;: 6.4, &quot;ninety_fifth_percentile&quot;: 7.3}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.828066127977863, &quot;coefficient_of_variation&quot;: 0.14171125977944032, &quot;sum&quot;: 876.5, &quot;variance&quot;: 0.6856935123042507, &quot;mean&quot;: 5.843333333333334}}}, &quot;sepal width (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 2.0, &quot;end&quot;: 4.40000044, &quot;width&quot;: 0, &quot;counts&quot;: [1, 0, 3, 4, 3, 0, 8, 5, 9, 14, 0, 10, 26, 11, 13, 0, 6, 12, 6, 4, 0, 3, 6, 2, 1, 0, 1, 1, 0, 1], &quot;max&quot;: 4.4, &quot;min&quot;: 2.0, &quot;bins&quot;: [2.0, 2.0800000146666666, 2.1600000293333332, 2.240000044, 2.3200000586666665, 2.4000000733333335, 2.480000088, 2.5600001026666668, 2.6400001173333334, 2.720000132, 2.8000001466666666, 2.8800001613333333, 2.9600001760000003, 3.0400001906666665, 3.1200002053333336, 3.20000022, 3.280000234666667, 3.3600002493333334, 3.440000264, 3.520000278666667, 3.6000002933333333, 3.6800003080000003, 3.760000322666667, 3.8400003373333336, 3.920000352, 4.000000366666667, 4.080000381333333, 4.160000396, 4.240000410666667, 4.320000425333333, 4.40000044], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 15.33333417110978, &quot;min&quot;: 2.0, &quot;max&quot;: 4.4, &quot;range&quot;: 2.4000000000000004, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 2.3, &quot;iqr&quot;: 0.5, &quot;q1&quot;: 2.8, &quot;median&quot;: 3.0, &quot;q3&quot;: 3.3, &quot;ninety_fifth_percentile&quot;: 3.8}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.4358662849366982, &quot;coefficient_of_variation&quot;: 0.14256420135304126, &quot;sum&quot;: 458.6000000000001, &quot;variance&quot;: 0.189979418344519, &quot;mean&quot;: 3.0573333333333337}}}, &quot;petal length (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 1.0, &quot;end&quot;: 6.900000690000001, &quot;width&quot;: 0, &quot;counts&quot;: [2, 9, 26, 11, 2, 0, 0, 0, 0, 0, 1, 2, 2, 2, 4, 8, 6, 12, 8, 9, 12, 4, 5, 9, 5, 5, 1, 1, 3, 1], &quot;max&quot;: 6.9, &quot;min&quot;: 1.0, &quot;bins&quot;: [1.0, 1.1966666896666667, 1.3933333793333333, 1.5900000690000002, 1.7866667586666667, 1.9833334483333336, 2.1800001380000005, 2.376666827666667, 2.5733335173333334, 2.7700002070000003, 2.966666896666667, 3.1633335863333336, 3.3600002760000005, 3.556666965666667, 3.753333655333334, 3.9500003450000003, 4.146667034666667, 4.343333724333334, 4.5400004140000005, 4.736667103666667, 4.933333793333334, 5.130000483000001, 5.326667172666667, 5.523333862333334, 5.720000552000001, 5.9166672416666675, 6.113333931333334, 6.310000621000001, 6.506667310666668, 6.703334000333334, 6.900000690000001], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 28.666669656833378, &quot;min&quot;: 1.0, &quot;max&quot;: 6.9, &quot;range&quot;: 5.9, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 1.3, &quot;iqr&quot;: 3.4999999999999996, &quot;q1&quot;: 1.6, &quot;median&quot;: 4.4, &quot;q3&quot;: 5.1, &quot;ninety_fifth_percentile&quot;: 6.1}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 1.7652982332594662, &quot;coefficient_of_variation&quot;: 0.4697440748428595, &quot;sum&quot;: 563.7, &quot;variance&quot;: 3.116277852348993, &quot;mean&quot;: 3.7580000000000005}}}, &quot;petal width (cm)&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 0.1, &quot;end&quot;: 2.50000025, &quot;width&quot;: 0, &quot;counts&quot;: [5, 29, 7, 7, 1, 0, 1, 0, 0, 0, 0, 7, 3, 5, 13, 0, 8, 12, 4, 2, 0, 12, 5, 6, 6, 0, 3, 8, 3, 3], &quot;max&quot;: 2.5, &quot;min&quot;: 0.1, &quot;bins&quot;: [0.1, 0.18000000833333335, 0.26000001666666667, 0.34000002500000004, 0.42000003333333336, 0.5000000416666667, 0.58000005, 0.6600000583333333, 0.7400000666666666, 0.8200000749999999, 0.9000000833333333, 0.9800000916666666, 1.0600001000000001, 1.1400001083333333, 1.2200001166666667, 1.300000125, 1.3800001333333334, 1.4600001416666668, 1.54000015, 1.6200001583333334, 1.7000001666666666, 1.780000175, 1.8600001833333333, 1.9400001916666667, 2.0200002, 2.1000002083333333, 2.1800002166666665, 2.260000225, 2.3400002333333334, 2.4200002416666666, 2.50000025], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 14.666667431592986, &quot;min&quot;: 0.1, &quot;max&quot;: 2.5, &quot;range&quot;: 2.4, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 0.2, &quot;iqr&quot;: 1.5, &quot;q1&quot;: 0.3, &quot;median&quot;: 1.3, &quot;q3&quot;: 1.8, &quot;ninety_fifth_percentile&quot;: 2.3}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.7622376689603465, &quot;coefficient_of_variation&quot;: 0.6355511414344188, &quot;sum&quot;: 179.90000000000003, &quot;variance&quot;: 0.5810062639821029, &quot;mean&quot;: 1.1993333333333336}}}, &quot;target&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 0.0, &quot;end&quot;: 2.0000002, &quot;width&quot;: 0, &quot;counts&quot;: [50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50], &quot;max&quot;: 2.0, &quot;min&quot;: 0.0, &quot;bins&quot;: [0.0, 0.06666667333333334, 0.13333334666666669, 0.20000002000000003, 0.26666669333333337, 0.3333333666666667, 0.40000004000000006, 0.4666667133333334, 0.5333333866666667, 0.6000000600000001, 0.6666667333333334, 0.7333334066666668, 0.8000000800000001, 0.8666667533333334, 0.9333334266666669, 1.0000001, 1.0666667733333335, 1.133333446666667, 1.2000001200000001, 1.2666667933333335, 1.3333334666666667, 1.4000001400000002, 1.4666668133333336, 1.5333334866666668, 1.6000001600000002, 1.6666668333333337, 1.7333335066666669, 1.8000001800000003, 1.8666668533333337, 1.933333526666667, 2.0000002], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 2.0000000099341073, &quot;min&quot;: 0.0, &quot;max&quot;: 2.0, &quot;range&quot;: 2.0, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 0.0, &quot;iqr&quot;: 2.0, &quot;q1&quot;: 0.0, &quot;median&quot;: 1.0, &quot;q3&quot;: 2.0, &quot;ninety_fifth_percentile&quot;: 2.0}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.8192319205190405, &quot;coefficient_of_variation&quot;: 0.8192319205190405, &quot;sum&quot;: 150.0, &quot;variance&quot;: 0.6711409395973155, &quot;mean&quot;: 1.0}}}, &quot;prediction&quot;: {&quot;histogram&quot;: {&quot;start&quot;: 0.0, &quot;end&quot;: 2.0000002, &quot;width&quot;: 0, &quot;counts&quot;: [50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50], &quot;max&quot;: 2.0, &quot;min&quot;: 0.0, &quot;bins&quot;: [0.0, 0.06666667333333334, 0.13333334666666669, 0.20000002000000003, 0.26666669333333337, 0.3333333666666667, 0.40000004000000006, 0.4666667133333334, 0.5333333866666667, 0.6000000600000001, 0.6666667333333334, 0.7333334066666668, 0.8000000800000001, 0.8666667533333334, 0.9333334266666669, 1.0000001, 1.0666667733333335, 1.133333446666667, 1.2000001200000001, 1.2666667933333335, 1.3333334666666667, 1.4000001400000002, 1.4666668133333336, 1.5333334866666668, 1.6000001600000002, 1.6666668333333337, 1.7333335066666669, 1.8000001800000003, 1.8666668533333337, 1.933333526666667, 2.0000002], &quot;n&quot;: 150}, &quot;frequentItems&quot;: null, &quot;drift_from_ref&quot;: null, &quot;isDiscrete&quot;: false, &quot;featureStats&quot;: {&quot;total_count&quot;: 150, &quot;missing&quot;: 0, &quot;distinct&quot;: 2.0000000099341073, &quot;min&quot;: 0.0, &quot;max&quot;: 2.0, &quot;range&quot;: 2.0, &quot;quantile_statistics&quot;: {&quot;fifth_percentile&quot;: 0.0, &quot;iqr&quot;: 2.0, &quot;q1&quot;: 0.0, &quot;median&quot;: 1.0, &quot;q3&quot;: 2.0, &quot;ninety_fifth_percentile&quot;: 2.0}, &quot;descriptive_statistics&quot;: {&quot;stddev&quot;: 0.8192319205190405, &quot;coefficient_of_variation&quot;: 0.8192319205190405, &quot;sum&quot;: 150.0, &quot;variance&quot;: 0.6711409395973155, &quot;mean&quot;: 1.0}}}}, &quot;properties&quot;: {&quot;observations&quot;: 900, &quot;missing_cells&quot;: 0, &quot;missing_percentage&quot;: 0.0}};
+      // Config handlebars and pass data to HBS template
+      const source = document.getElementById(&quot;entry-template&quot;).innerHTML;
+      const template = Handlebars.compile(source);
+      const html = template(context);
+      const target = document.getElementById(&quot;generated-html&quot;);
+      target.innerHTML = html;
+    }
+
+    function initWebsiteScripts() {
+      const $featureSearch = document.getElementById(&quot;wl__feature-search&quot;);
+      const $tableBody = document.getElementById(&quot;table-body&quot;);
+      const $discrete = document.getElementById(&quot;inferredDiscrete&quot;);
+      const $nonDiscrete = document.getElementById(&quot;inferredNonDiscrete&quot;);
+      const $unknown = document.getElementById(&quot;inferredUnknown&quot;);
+
+      const activeTypes = {
+        discrete: true,
+        &quot;non-discrete&quot;: true,
+        unknown: true,
+      };
+
+      let searchString = &quot;&quot;;
+
+      function debounce(func, wait, immediate) {
+        let timeout;
+
+        return function () {
+          const context = this;
+          const args = arguments;
+          const later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+          };
+
+          const callNow = immediate &amp;&amp; !timeout;
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+          if (callNow) func.apply(context, args);
+        };
+      }
+
+      function filterNotification() {
+        const $notifCircleContainer = $(&quot;.notif-circle-container&quot;)
+        const $boxes = $(&#x27;.wl_filter-options&gt;.form-check&gt;input[name=checkbox]:checked&#x27;);
+        const item = Object.values($boxes).find(function(value) { return $(value)[0] === undefined});
+        if (item === undefined) {
+          $notifCircleContainer.removeClass(&quot;d-none&quot;)
+        } else {
+          $notifCircleContainer.addClass(&quot;d-none&quot;)
+        }
+      }
+
+      function handleSearch() {
+        const tableBodyChildren = $tableBody.children;
+
+        for (let i = 0; i &lt; tableBodyChildren.length; i++) {
+          const type = tableBodyChildren[i].dataset.inferredType.toLowerCase();
+          const name = tableBodyChildren[i].dataset.featureName.toLowerCase();
+
+          if (activeTypes[type] &amp;&amp; name.startsWith(searchString)) {
+            tableBodyChildren[i].style.display = &quot;&quot;;
+          } else {
+            tableBodyChildren[i].style.display = &quot;none&quot;;
+          }
+        }
+      }
+
+      $featureSearch.addEventListener(
+        &quot;keyup&quot;,
+        debounce((event) =&gt; {
+          searchString = event.target.value.toLowerCase();
+          handleSearch();
+        }, 100),
+      );
+
+      $discrete.addEventListener(&quot;change&quot;, (event) =&gt; {
+        if (event.currentTarget.checked) {
+          activeTypes[&quot;discrete&quot;] = true;
+        } else {
+          activeTypes[&quot;discrete&quot;] = false;
+        }
+        handleSearch();
+        filterNotification()
+      });
+
+      $nonDiscrete.addEventListener(&quot;change&quot;, (event) =&gt; {
+        if (event.currentTarget.checked) {
+          activeTypes[&quot;non-discrete&quot;] = true;
+        } else {
+          activeTypes[&quot;non-discrete&quot;] = false;
+        }
+        handleSearch();
+        filterNotification()
+      });
+
+      $unknown.addEventListener(&quot;change&quot;, (event) =&gt; {
+        if (event.currentTarget.checked) {
+          activeTypes[&quot;unknown&quot;] = true;
+        } else {
+          activeTypes[&quot;unknown&quot;] = false;
+        }
+        handleSearch();
+        filterNotification()
+      });
+
+
+      $(&quot;.svg-container&quot;).css(&quot;padding-bottom&quot;, &quot;27%&quot;)
+    }
+
+    function checkedBoxes() {
+      const $boxes = $(&#x27;input[name=checkbox]:checked&#x27;);
+      const $notifCircleContainer = $(&quot;.notif-circle-container&quot;)
+
+      if ($boxes.length) {
+        $notifCircleContainer.removeClass(&quot;d-none&quot;)
+      }
+    }
+
+    function openFilter() {
+      const $filterOptions = $(&quot;.dropdown-container&quot;);
+      const $notifCircleContainer = $(&quot;.notif-circle-container&quot;)
+      const filterClass = $filterOptions.attr(&quot;class&quot;);
+
+      if (filterClass.indexOf(&quot;d-none&quot;) &gt; 0) {
+        $notifCircleContainer.addClass(&quot;d-none&quot;)
+        $filterOptions.removeClass(&quot;d-none&quot;);
+        $(&quot;.filter-icon&quot;).addClass(&quot;d-none&quot;)
+        $(&quot;.close-filter-icon&quot;).removeClass(&quot;d-none&quot;)
+      } else {
+        $filterOptions.addClass(&quot;d-none&quot;);
+        $(&quot;.close-filter-icon&quot;).addClass(&quot;d-none&quot;)
+        $(&quot;.filter-icon&quot;).removeClass(&quot;d-none&quot;)
+        checkedBoxes()
+      }
+    }
+
+    // Invoke functions -- keep in mind invokation order
+    registerHandlebarHelperFunctions();
+    initHandlebarsTemplate();
+    initWebsiteScripts();
+  &lt;/script&gt;
+&lt;/html&gt;
+" width=100% height=1000px
+        frameBorder=0></iframe>
